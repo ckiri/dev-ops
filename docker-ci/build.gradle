@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'checkstyle'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    checkstyle 'com.puppycrawl.tools:checkstyle:10.9.3'
+}
+
+checkstyle {
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+    toolVersion = "10.9.3"
+    ignoreFailures = false
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ["${System.getenv('MAIN_SRC_DIR')}"]
+        }
+    }
+
+    test {
+        java {
+            srcDirs = ["${System.getenv('TEST_SRC_DIR')}"]
+        }
+    }
+}
+

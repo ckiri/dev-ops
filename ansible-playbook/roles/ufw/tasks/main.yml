@@ -1,0 +1,33 @@
+# Check if ufw is installed
+- name: Ensure ufw is installed.
+  apt: name=ufw state=present
+
+# Close all ports
+- name: Ensure all ports are closed.
+  ufw:
+    rule: deny
+
+# Allow specific ports
+- name: Allow SSH.
+  ufw:
+    rule: allow
+    port: ssh
+    comment: "Allow SSH"
+
+- name: Allow HTTP.
+  ufw:
+    rule: allow
+    port: http
+    comment: "Allow HTTP"
+
+- name: Allow HTTPS.
+  ufw:
+    rule: allow
+    port: https
+    comment: "Allow HTTPS"
+
+# Enable ufw
+- name: Enable ufw
+  ufw:
+    state: enabled
+

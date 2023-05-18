@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  checkstyle:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - REPO_URL=$REPO_URL
+        - MAIN_SRC_DIR=$MAIN_SRC_DIR
+        - TEST_SRC_DIR=$TEST_SRC_DIR
+    container_name: docker-ci
+    image: dockerci:checkstyle
+    volumes:
+      - ./google_checks.xml:/app/config/checkstyle/checkstyle.xml
+      - ./build.gradle:/app/build.gradle
+      - ./gradlew:/app/gradlew
+      - ./gradle:/app/gradle
+

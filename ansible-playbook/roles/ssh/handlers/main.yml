@@ -1,0 +1,6 @@
+---
+# Restart ssh service if ssh config has changed.
+- name: restart sshd
+  service:
+    name: sshd
+    state: restarted

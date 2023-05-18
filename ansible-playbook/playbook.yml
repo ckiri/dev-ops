@@ -1,0 +1,9 @@
+---
+- name: ansible-playbook
+  hosts: localhost
+  become: yes
+
+  roles:
+    - role: ufw
+    - role: cron
+    - role: ssh

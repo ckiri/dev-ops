@@ -1,0 +1,13 @@
+- name: Ensure cron is installed.
+  apt: name=cron state=present
+
+- name: Ensure cron service is started.
+  service: name=cron state=started enabled=yes
+
+# Actual cronjob
+- name: Ensure cronjob is run every day at 4:00am.
+  cron:
+    name: "Restart server every day at 4:00am."
+    minute: "55"
+    hour: "3"
+    job: "/sbin/shutdown -r +5 'System rebooting in 5 minutes.'"
