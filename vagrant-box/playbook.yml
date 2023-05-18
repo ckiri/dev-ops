@@ -1,0 +1,8 @@
+---
+- name: webserver-deployment
+  hosts: centos
+  become: true
+
+  roles:
+    - role: setup
+    - role: deployment

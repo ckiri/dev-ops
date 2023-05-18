@@ -1,0 +1,12 @@
+- name: Ensure the necessary docker packages are installed.
+  yum:
+    name: 
+      - docker
+      - python-docker
+    state: present
+
+- name: Ensure the docker service is started.
+  service:
+    name: docker
+    state: started
+    enabled: yes

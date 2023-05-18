@@ -1,0 +1,9 @@
+# Ubuntu server
+[centos]
+192.168.56.4
+
+# Variables for ubuntu server
+[multi:vars]
+ansible_ssh_user=vagrant
+ansible_ssh_orivate_key_file=~/.vagrant.d/insecure_private_key
+

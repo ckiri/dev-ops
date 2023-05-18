@@ -1,0 +1,19 @@
+- name: Ensure the container image is built.
+  docker_image:
+    name: nginx:webserver
+    build:
+      path: /vagrant
+    state: present
+    source: build
+
+
+- name: Ensure the container is runnung.
+  docker_container:
+    name: webserver
+    image: "nginx:webserver"
+    state: started
+    ports:
+      - "80:80"
+    volumes:
+      - "/vagrant/index.html:/var/www/html/index.html"
+
