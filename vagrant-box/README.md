@@ -39,7 +39,7 @@ sudo vagrant provision
 
 ## Überprüfen
 Wurde das Ansible Playbook erfolgreich "gespielt" kann das Reslutat über diese IP-Adresse:
-[192.168.56.4](192.168.56.4:80) überprüft werden.
+`192.168.56.4:80` überprüft werden.
 
 ## Dokumentation
 (WIP)
