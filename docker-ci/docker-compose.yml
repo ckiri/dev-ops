@@ -2,6 +2,7 @@ version: "3"
 
 services:
   checkstyle:
+
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,6 +10,7 @@ services:
         - REPO_URL=$REPO_URL
         - MAIN_SRC_DIR=$MAIN_SRC_DIR
         - TEST_SRC_DIR=$TEST_SRC_DIR
+
     container_name: docker-ci
     image: dockerci:checkstyle
     volumes:

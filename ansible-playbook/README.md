@@ -17,9 +17,7 @@ sudo apt install ansible
 
 Im `playbook.yml` muss folgendes stehen:
 ```yaml
-...
 Hosts: localhost
-...
 ```
 
 ### Bei der Verwendung mit Vagrant
@@ -32,9 +30,7 @@ apt install ansible vagrant virtualbox
 
 Im `playbook.yml` muss folgendes stehen:
 ```yaml
-...
 Hosts: ubuntu
-...
 ```
 
 Ist `ubuntu` bei Hosts eingetragen, verwendet Ansible

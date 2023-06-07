@@ -104,7 +104,6 @@ repositories {
 dependencies {
     checkstyle 'com.puppycrawl.tools:checkstyle:10.9.3'
 }
-...
 ```
 
 Als nächstes wird das checkstyle Plugin konfiguriert. Es wird der Pfad der `checkstyle.xml`-Datei
@@ -112,13 +111,11 @@ angegeben. Ebenso die Version des Plugins sowie andere Optionen. In diesem Fall 
 Fehler erkannt werden oder nicht.
 
 ```gradle
-...
 checkstyle {
     configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
     toolVersion = "10.9.3"
     ignoreFailures = false
 }
-...
 ```
 
 zum Schluss werden noch die Pfade zu den Direktiven des zu überprüfenden Quellcodes angegeben. 
@@ -126,7 +123,6 @@ Um hartes hinterlegen von Pfaden im Skript zu vermeiden, können Umgebungsvariab
 werden. Dazu aber später mehr.
 
 ```gradle
-...
 sourceSets {
     main {
         java {
@@ -151,7 +147,6 @@ Argumente `ARG` von der Command-Line als Parameter oder wiederum als Umgebungsva
 Hostsystem übergeben:
 
 ```Dockerfile
-...
 ARG	REPO_URL	
 ARG	MAIN_SRC_DIR	
 ARG	TEST_SRC_DIR
@@ -160,7 +155,6 @@ ARG	TEST_SRC_DIR
 ENV	REPO_URL=${REPO_URL}		
 ENV	MAIN_SRC_DIR=${MAIN_SRC_DIR}
 ENV	TEST_SRC_DIR=${TEST_SRC_DIR}
-...
 ```
 
 Nun werden die erforderlichen Softwarepakete mit `apk` installiert. `Git` zum style checken des
@@ -169,19 +163,15 @@ später mehr. Es wird außerdem ein Verzeichnis `/app` erstellt indem später al
 werden.
 
 ```Dockerfile
-...
 RUN	apk add --no-cache git openjdk11 && \
 	mkdir /app 
-...
 ```
 
 Das Verzeichnis `/app` wird als `WORKDIR` verwendet. Dies ist nun der AUsgangspunkt für alle weiteren
 Befehle.
 
 ```Dockerfile
-...
 WORKDIR	/app
-...
 ```
 
 Es wird nun das Repository geklont, hierfür wird wiederum auf eine Umgebungsvariable zugegriffen
@@ -190,19 +180,15 @@ um ein hartes hinterlegen der URL zu vermeiden. Die Umgebungsvariable wurde als 
 Datei gemountet wird, erstellt.
 
 ```Dockerfile
-...
 RUN	cd /app && \
 	git clone -o origin ${REPO_URL} . && \
 	mkdir -p config/checkstyle
-...
 ```
 
 Zum Schluss wird noch via `CMD` das Gradle Skript zum Checken des Projektes ausgeführt:
 
 ```Dockerfile
-...
 CMD	["./gradlew", "check"]
-...
 ```
 
 ---
@@ -222,14 +208,19 @@ festgelegt werden. Ebenfalls der Tag des gebauten Images. Zum Schluss werden noc
 für das Gradle Skript als volume-mount in den Container gemountet:
 
 ```yaml
+version: "3"
+
 services:
   checkstyle:
+  
     build:
+      context: .
       dockerfile: Dockerfile
       args:
         - REPO_URL=$REPO_URL
         - MAIN_SRC_DIR=$MAIN_SRC_DIR
         - TEST_SRC_DIR=$TEST_SRC_DIR
+
     container_name: docker-ci
     image: dockerci:checkstyle
     volumes:
@@ -238,6 +229,12 @@ services:
       - ./gradlew:/app/gradlew
       - ./gradle:/app/gradle
 ```
+Die `version` am Anfang des `docker-compose.yml`-Datei gibt die Version
+des compose Files an. Hier gibt es von Version zu Version syntaktische
+Unterschiede.
+
+Ebenfalls noch zu erwähnen ist die `context`. Hier wird spetifiziert
+von wo aus das Dockerfile zum bau des Images verwendet werden soll.
 
 Die in docker-compose Datei angegebenen Umgebungsvariablen sind in der Datei `.env` angegeben.
 Wird docker-compose aufgerufen, so wird automatisch `.env` nach Umgebungsvariablen "durchsucht".

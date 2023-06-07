@@ -3,7 +3,7 @@
 ----
 ## Aufgabenstellung
 
-Es soll ein ein Docker Image auch `Dockerfile` erstellt werden.
+Es soll ein ein Docker Image aus einem `Dockerfile` erstellt werden.
 In diesem soll ein Nginx Webserver von grund auf erstellt werden.
 Die Datei `index.html` muss hierbei über `-v` (volume mount) oder `--mount` (bind mount)
 im virtuellen Filesystem des Docker Containers gemounted werden, sodass Veränderungen
