@@ -4,8 +4,7 @@
 Es soll analog zu Aufgabe 2: [Docker-Nginx-Webserver](https://github.com/ckiri/dev-ops/tree/main/docker-nginx-webserver) ein Dockerfile erstellt werden welches es
 erlaubt eine statische `index.html`-Datei auszuliefern. Mithilfe von Vagrant soll eine Virtuelle
 Maschine erstellt werden die über Ansible provisioniert wird. Wie in Aufgabe 2, sollen Änderungen
-in `index.html` automatisch übernommen werden. Hierfür wird ein `/vagrant` share Ordner verwendet
-werden.
+in `index.html` automatisch übernommen werden. Hierfür wird ein `/vagrant` share Ordner verwendet.
 
 ## Vorraussetzung
 Um die Provisiunierung starten zu können, wird Vagrant, Ansible sowie VirtualBox als Provider für
@@ -27,7 +26,7 @@ sudo yum install ansible vagrant virtualbox
 ```
 
 ## Ausführen
-Beim start von Vagrant wird das Ansible `playbook.yml` automatisch ausgeführt:
+Beim Starten von Vagrant wird das Ansible `playbook.yml` automatisch ausgeführt:
 ```bash
 sudo vagrant up
 ```
@@ -65,8 +64,8 @@ Zum provisionieren mit Ansible nachdem die VM erstellt wurde:
   end
 ```
 
-Um die Datei `index.html` auf dem innerhalb der VM verfügbar zu machen, muss ein sog. synced oder
-"share" Folder erstellt werden. es werden außerdem Parameter für zugriffsrechte gegeben:
+Um die Datei `index.html` innerhalb der VM verfügbar zu machen, muss ein sog. synced oder
+"share" Folder erstellt werden. es werden außerdem Parameter für Zugriffsrechte gegeben:
 ```ruby
   config.vm.synced_folder "vagrant", "/vagrant", type: "virtualbox", mount_options: ["dmode=777", "fmode=666"]
 ```
@@ -80,7 +79,7 @@ werden für die VM 1024MB an speicher auf dem Hostsystem reserviert:
   end
 ```
 
-Zum Schluss wird ncoh der hostname sowie die IP-Adresse der VM spezifiziert:
+Zum Schluss wird nooch der `hostname` sowie die IP-Adresse der VM spezifiziert:
 ```ruby
   config.vm.define "centos" do |app|
     app.vm.hostname = "centos"
@@ -97,8 +96,8 @@ Die aus dem `Vagrantfile` angegebenen Server auflisten (hier nur die CentOS VM):
 192.168.56.4
 ```
 
-Es können zudem auch Variablen der VMs gesetzt werden. Hier zum "debuggen" die SSH Funktion gesetzt
-um sich nach dem erfolgreichen Start der VM via remote, aufzuschalten:
+Es können zudem auch Variablen der VMs gesetzt werden. Hier wird zum "debuggen" die SSH Funktion
+gesetzt um sich nach dem erfolgreichen Start der VM via remote shell, aufzuschalten:
 ```ini
 [multi:vars]
 ansible_ssh_user=vagrant
@@ -107,7 +106,7 @@ ansible_ssh_orivate_key_file=~/.vagrant.d/insecure_private_key
 
 ### Playbook
 Im Playbook: `playbook.yml` werden die "Plays" also die Tasks angegeben die auf den Zielsystemen
-ausgeführt werden soll. Um das Playbook übersichtlicher und modularer zu machen werden einzelne
+ausgeführt werden sollen. Um das Playbook übersichtlicher und modularer zu machen, werden einzelne
 Taskgruppen in sogenannte `roles` unterteilt:
 ```yml
 ---
@@ -126,7 +125,7 @@ Das Playbook wurde in zwei Rollen `setup` und `deployment` unterteilt.
 Als erstes wird die Rolle `setup` gespielt. Hier wird gecheckt ob die erforderlichen Softwarepakete
 installiert sind und Services gestartet sind.
 
-Ein Task in Ansible besteht aus bestenfalls aus einem Modul. In diesem "[Modul](https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html)" können Optionen
+Ein Task in Ansible besteht bestenfalls aus einem Modul. In diesem "[Modul](https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html)" können Optionen
 spezifiziert werden. Da CentOS den Paketmanager `yum` verwendet, kann dieses Modul zum installieren
 der Pakete genutzt werden:
 ```yml
@@ -137,17 +136,17 @@ der Pakete genutzt werden:
       - python-docker
     state: present
 ```
-Für das in der späteren Rolle `deplyoment` wird das Python Paket: `python-docker` benötigt, um über
-Ansible ein Dockerfile zu bauen. Der `state` ins Modulspeziefisch und gibt den Status der Pakete an.
-Hier `present` also vorhanden. Durch die Idempotenz, wird falls die Paktet nicht vorhanden sind, diese
-installiert. Falls diese aber schon vorhanden sind, nicht.
+Für die spätere Rolle `deplyoment` wird das Python Paket: `python-docker` benötigt, um über
+Ansible ein Dockerfile zu bauen. Der `state` ist Modulspeziefisch und gibt den Status der Pakete an.
+Hier `present`, also vorhanden. Durch die Idempotenz werden Pakte die noch nicht vorhadnen sind
+installiert.
 
-Der letzte Task in der Rolle `setup`, startet den Docker service also die Laufzeitumgebung für Docker.
+Der letzte Task in der Rolle `setup` startet den Docker service also die Laufzeitumgebung für Docker.
 
 #### role: "deplyoment"
 Wurde die Rolle `setup` erfolgreich gespielt, so wird zur nächsten Rolle `deplyoment` übergegangen.
-Es wird das Ansible Modul `docker_image` zum builden des images aus einem Dockerfile verwendet.
-Nach erfolgreichem builden, wird der Container mit dem Modul `docker_container` gestartet:
+Es wird das Ansible Modul `docker_image` zum builden des Images aus einem Dockerfile verwendet.
+Nach erfolgreichem Bauen, wird der Container mit dem Modul `docker_container` gestartet:
 ```yml
 - name: Ensure the container image is built.
   docker_image:
