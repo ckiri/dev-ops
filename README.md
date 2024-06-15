@@ -8,9 +8,9 @@ jeweils umfassende Dokumnetationen zu Code-Snippets und Setup Instruktionen.
 
 ## Übersicht
 
-* Aufgabe 1: [Verständnisfragen](https://github.com/ckiri/dev-ops/blob/main/verst%C3%A4ndnisfragen/verst%C3%A4ndnisfragen.md)
-* Aufgabe 2: [Docker-Nginx-Webserver](https://github.com/ckiri/dev-ops/tree/main/docker-nginx-webserver)
-* Aufgabe 3: [Docker-CI](https://github.com/ckiri/dev-ops/tree/main/docker-ci)
-* Aufgabe 4: [Ansible-Playbook](https://github.com/ckiri/dev-ops/tree/main/ansible-playbook)
-* Aufgabe 5: [Vagrant-Box](https://github.com/ckiri/dev-ops/tree/main/vagrant-box)
+* Aufgabe 1: [Verständnisfragen](./verständnisfragen/verständnisfragen.md)
+* Aufgabe 2: [Docker-Nginx-Webserver](./docker-nginx-webserver/README.md)
+* Aufgabe 3: [Docker-CI](./docker-ci/README.md)
+* Aufgabe 4: [Ansible-Playbook](./ansible-playbook/README.md)
+* Aufgabe 5: [Vagrant-Box](./vagrant-box/README.md)
 
