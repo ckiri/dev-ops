@@ -8,7 +8,7 @@ jeweils umfassende Dokumnetationen zu Code-Snippets und Setup Instruktionen.
 
 ## Übersicht
 
-* Aufgabe 1: [Verständnisfragen](./verständnisfragen/verständnisfragen.md)
+* Aufgabe 1: [Verständnisfragen](./verständnisfragen/README.md)
 * Aufgabe 2: [Docker-Nginx-Webserver](./docker-nginx-webserver/README.md)
 * Aufgabe 3: [Docker-CI](./docker-ci/README.md)
 * Aufgabe 4: [Ansible-Playbook](./ansible-playbook/README.md)
